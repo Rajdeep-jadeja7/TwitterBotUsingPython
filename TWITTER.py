@@ -4,7 +4,6 @@ import time
 from dotenv import load_dotenv
 
 load_dotenv()
-
 API_KEY = os.getenv("API_KEY")
 API_SECRET = os.getenv("API_SECRET")
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
@@ -13,7 +12,6 @@ BEARER_TOKEN = os.getenv("BEARER_TOKEN")
 
 auth = tweepy.OAuth1UserHandler(API_KEY, API_SECRET, ACCESS_TOKEN, ACCESS_SECRET)
 api_v1 = tweepy.API(auth)
-
 client = tweepy.Client(
     bearer_token=BEARER_TOKEN,
     consumer_key=API_KEY,
@@ -34,7 +32,7 @@ def postingtweet(text, imagepath=None, alt_text=None):
     else:
         response = client.create_tweet(text=text)
     print(f"Tweet posted with ID: {response.data['id']}")
-
+    
 def replytotweet(tweetid, replytext):
     response = client.create_tweet(
         text=replytext,
@@ -72,14 +70,11 @@ if __name__ == "__main__":
         print("5 - For Deleting a tweet")
         print("6 - For Retweeting a tweet")
         print("7 - Exit")
-
         choice = input("Enter Your choice from 1,2,3,4,5,6,7: ").strip()
-
         match choice:
             case "1":
                 tweet= input("Enter your tweet: ")
                 postingtweet(tweet)
-
             case "2":
               print("Enter tweets one by one and type f or F when finished.")
               tweets = []
@@ -88,11 +83,9 @@ if __name__ == "__main__":
                     if text.lower() == 'f':
                        break
                     tweets.append(text)
-
               interval = input("Enter Time interval in seconds between tweets: ")
               interval_sec = int(interval)  # Will raise ValueError if invalid input
               scheduledtweets(tweets, interval_sec)
-
             case "3":
                 tweet=input("Enter the text that you want to Tweet: ")
                 imagepath = input("Enter the full image file path: ")
